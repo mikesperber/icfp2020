@@ -1,0 +1,36 @@
+* DONE Player type w/ id
+  CLOSED: [2019-06-21 Fri 15:04]
+* DONE in GameplayT, specialize to GameEvent and GameCommand
+  CLOSED: [2019-06-21 Fri 14:39]
+* DONE redo strategy / player interaction
+  CLOSED: [2019-06-21 Fri 15:45]
+* DONE FIXME
+  CLOSED: [2019-06-21 Fri 19:07]
+* TODO Who won?
+* DONE concurrency
+  CLOSED: [2019-06-24 Mon 16:17]
+* TODO different player w/ random monad
+* TODO simplify RWT
+* TODO FIXME@
+* TODO Truly async ConcurrentPlayer
+* TODO ParallelPlayer
+* TODO Conal's monad transformer
+* DONE seq raus
+  CLOSED: [2019-06-27 Thu 14:40]
+* DONE Events
+  CLOSED: [2019-06-27 Thu 15:08]
+data GameEvent =
+    HandsDealt (Map PlayerName Hand)
+  | PlayerTurn PlayerName
+  | CardPlayed PlayerName Card
+  | TrickTaken PlayerName Trick
+  | IllegalMove PlayerName
+  | GameOver
+Ich hab das bisher immer so gelebt, dass Events in der Vergangenheit liegen und ueber ein Verb beschrieben werden. Da faellt insbesondere IllegalMove und PlayerTurn raus. Da bietet sich IllegalCardPlayed an und PlayerTurnChanged an. Vll kann man CardPlayed dann in LegalCardPlayed umbennen um praeziser zu sein. 
+(Note to my self: Umlaute einrichten).
+IllegalCardPlayed ist ausserdem besser, weil es ja gar keinen anderen illegal move gibt, als eine falsche Karte zu spielen. 
+
+Und wenn man das sauber durchzieht bekommt man auch auf einer Sprachebene ne super Unterscheidung zwischen Commands und Events hin. 
+* TODO HandDealt
+* DONE playerStateHand
+  CLOSED: [2019-06-27 Thu 17:05]

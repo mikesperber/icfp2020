@@ -1,0 +1,1 @@
+FROM ghcide:latest

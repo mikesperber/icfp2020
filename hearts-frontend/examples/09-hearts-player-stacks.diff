@@ -1,0 +1,60 @@
+diff --git a/6-ModelViewUpdate/elm-architecture-tutorial/examples/09-hearts.elm b/6-ModelViewUpdate/elm-architecture-tutorial/examples/09-hearts.elm
+index 4c28343..e8d09e3 100644
+--- a/6-ModelViewUpdate/elm-architecture-tutorial/examples/09-hearts.elm
++++ b/6-ModelViewUpdate/elm-architecture-tutorial/examples/09-hearts.elm
+@@ -196,14 +196,25 @@ showHand : Hand -> Html Msg
+ showHand hand =
+     div [] (List.map floatingPrettyColoredCard hand)
+ 
+-showPlayer : Player -> Hand -> Html Msg
+-showPlayer player hand =
++showStack: List Card -> Html Msg
++showStack stack =
++   div [] (List.map floatingPrettyColoredCard stack)
++
++showPlayer : Player -> Hand -> List Card -> Html Msg
++showPlayer player hand stack =
+     (div [ style "float" "left"
+          , style "height" "100px"
+          , style "width" "200px"
+          ]
+          [ text player.name
++         , br [] []
++         , text "Hand"
++         , br [] []
+          , showHand hand
++         , br [] []
++         , text "Stack"
++         , br [] []
++         , showStack stack
+          ])
+ 
+ prettyGameCommand : GameCommand -> Html Msg
+@@ -255,9 +266,15 @@ showWinner maybeWinner players =
+ 
+ view : Model -> Html Msg
+ view { gameState, gameCommands } =
+-    let playersWithHands = List.map (\ player -> case Dict.get player.id gameState.hands of
+-                                                     Just hand -> (player, hand)
+-                                                     Nothing -> (player, emptyHand)) gameState.players
++    let playersWithData = List.map  (\ player -> 
++                                     let hand = case Dict.get player.id gameState.hands of
++                                                  Just playerHand -> playerHand
++                                                  Nothing -> emptyHand
++                                         stack = case Dict.get player.id gameState.stacks of 
++                                                  Just playerStack -> playerStack
++                                                  Nothing -> []
++                                     in (player, hand, stack))
++                                    gameState.players
+     in
+     div [style "font-family" "sans-serif"]
+         (List.concat [ [ div [ style "width" "100%"
+@@ -272,7 +289,7 @@ view { gameState, gameCommands } =
+                                       ]
+                                    [ text "Process commands" ]] ]
+                      , [ br [ style "clear" "both" ] [] ]
+-                     , List.map (\ (player, hand) -> showPlayer player hand) playersWithHands
++                     , List.map (\ (player, hand, stack) -> showPlayer player hand stack) playersWithData
+                      , [ br [ style "clear" "both" ] [] ]
+                      , [ showGameCommands gameCommands ]
+                      , [ br [ style "clear" "both" ] [] ]
