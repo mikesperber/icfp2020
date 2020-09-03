@@ -28,18 +28,15 @@ The `Sync` module has two functions `gameAlong` and
 
 ## UI version
 
-- build the Haskell executable, which Cabal will put into a file like
-  `dist-newstyle/build/x86_64-osx/ghc-8.8.3/hearts-0.1.0.0/x/server/build/server/server`
+- in the `hearts` directory, run `./docker-shell.sh` to start a
+  suitable shell in a Docker container
 
-- start the table server:
+- inside the Docker container, do `cabal build` to build the server
 
-```
-.../server -s Table -p 8080 &
-.../server -s Player -p 8001 -n Mike -i 1 &
-.../server -s Player -p 8002 -n Peter -i 2 &
-.../server -s Player -p 8003 -n Nicole -i 3 &
-.../server -s Player -p 8004 -n Annette -i 4 &
-```
+- inside the Docker container, do `./run-server-inside-docker.sh` to
+  start the server
+  
+- *outside* the Docker container:
 
 - install [Elm](https://elm-lang.org/)
 
@@ -52,4 +49,4 @@ elm reactor
 - go to the URL there, typically
   [`http://localhost:8000`](http://localhost:8000)
   
-- click on `examples`, then `09-hearts.elm`
+- click on `examples`, then `HeartsFrontend.elm`
