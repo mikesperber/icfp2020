@@ -1,4 +1,4 @@
-module HeartsUI exposing (main)
+module HeartsFrontend exposing (main)
 
 import Browser
 import Html exposing (Html, span, div, button, ul, li, br, text)
